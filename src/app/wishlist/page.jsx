@@ -56,7 +56,7 @@ const WishlistPage = () => {
   };
 
   const handleMoveToCart = (itemId) => {
-    console.log(`Moving item ${itemId} to cart`);
+    console.log(`Moving item ${itemId} to carts`);
     handleRemoveFromWishlist(itemId);
   };
 

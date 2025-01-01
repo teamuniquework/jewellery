@@ -2,6 +2,7 @@ import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { WishlistProvider } from "@/context/WishlistProvider";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -30,9 +31,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.variable} antialiased`}
       >
+        <WishlistProvider>
         <Navigation/>
         {children}
         <Footer/>
+        </WishlistProvider>
       </body>
     </html>
   );

@@ -1,10 +1,11 @@
 // WishlistItem.jsx
+import Image from "next/image";
 import React from "react";
 import { BsHandbag, BsTrash } from "react-icons/bs";
 
 const WishlistItem = ({ item, onRemove, onMoveToCart }) => {
-  const calculateDiscount = (actualPrice, discountedPrice) => {
-    const discount = ((actualPrice - discountedPrice) / actualPrice) * 100;
+  const calculateDiscount = (originalPrice, price) => {
+    const discount = ((originalPrice - price) / originalPrice) * 100;
     return Math.round(discount);
   };
 
@@ -12,9 +13,9 @@ const WishlistItem = ({ item, onRemove, onMoveToCart }) => {
     <div className="p-4 hover:shadow-md transition-shadow duration-200">
       <div className="relative ">
         {/* Product Image */}
-        <div className="h-48 w-full bg-gray-100 rounded mb-4">
+        <div className="h-48 w-full bg-gray-100 rounded mb-4 relative">
           {/* Replace with actual image */}
-          {/* <Image src={item.image} alt={item.name} layout="fill" objectFit="cover" className="rounded" /> */}
+          <Image src={item.image} alt={item.name} layout="fill" objectFit="cover" className="rounded" />
         </div>
 
         {/* Quick Actions */}
@@ -33,14 +34,14 @@ const WishlistItem = ({ item, onRemove, onMoveToCart }) => {
       <h3 className="font-medium text-gray-800 mb-2">{item.name}</h3>
       <div className="flex items-baseline mb-2">
         <span className="text-lg font-semibold text-gray-900">
-          ${item.discountedPrice}
+          ${item.price}
         </span>
         <span className="text-sm text-gray-400 line-through ml-2">
-          ${item.actualPrice}
+          ${item.originalPrice}
         </span>
-        {item.actualPrice > item.discountedPrice && (
+        {item.originalPrice > item.price && (
           <span className="text-xs text-rose-500 bg-rose-50 rounded px-2 py-1 ml-2">
-            {calculateDiscount(item.actualPrice, item.discountedPrice)}% OFF
+            {calculateDiscount(item.originalPrice, item.price)}% OFF
           </span>
         )}
       </div>

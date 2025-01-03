@@ -24,25 +24,29 @@ const CartSidebar = () => {
       image: "/necklace.jpg"
     },
     {
-        id: 3,
-        name: "Gold Ring ",
-        quantity: 2,
-        actualPrice: 199.99,
-        discountedPrice: 159.99,
-        image: "/ring.jpg"
-      },
-      {
-        id: 4,
-        name: "Silver Necklace",
-        quantity: 1,
-        actualPrice: 299.99,
-        discountedPrice: 249.99,
-        image: "/necklace.jpg"
-      },
+      id: 3,
+      name: "Gold Ring ",
+      quantity: 2,
+      actualPrice: 199.99,
+      discountedPrice: 159.99,
+      image: "/ring.jpg"
+    },
+    {
+      id: 4,
+      name: "Silver Necklace",
+      quantity: 1,
+      actualPrice: 299.99,
+      discountedPrice: 249.99,
+      image: "/necklace.jpg"
+    },
   ]);
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
+  };
+
+  const closeCart = () => {
+    setIsCartOpen(false);
   };
 
   const updateQuantity = (id, change) => {
@@ -65,6 +69,17 @@ const CartSidebar = () => {
   const calculateDiscount = (actualPrice, discountedPrice) => {
     return Math.round(((actualPrice - discountedPrice) / actualPrice) * 100);
   };
+
+  // Custom link wrapper component
+  const CartLink = ({ href, className, children }) => (
+    <Link 
+      href={href} 
+      className={className}
+      onClick={closeCart}
+    >
+      {children}
+    </Link>
+  );
 
   return (
     <>
@@ -92,13 +107,12 @@ const CartSidebar = () => {
         }`}>
           {/* Cart Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h2 className="flex items-center text-xl font-semibold">
-  Shopping Cart 
-  <span className="ml-2 bg-black text-white rounded-full w-7 h-7 flex items-center justify-center">
-    {cartItems.length}
-  </span>
-</h2>
-
+            <h2 className="flex items-center text-xl font-semibold">
+              Shopping Cart 
+              <span className="ml-2 bg-black text-white rounded-full w-7 h-7 flex items-center justify-center">
+                {cartItems.length}
+              </span>
+            </h2>
             <button 
               onClick={toggleCart}
               className="p-1 bg-gray-100 rounded-full transition duration-200"
@@ -110,14 +124,12 @@ const CartSidebar = () => {
           {/* Cart Items Container */}
           <div className="flex-1 overflow-y-auto p-4 max-h-[calc(100vh-200px)]">
             {cartItems.length === 0 ? (
-              // Empty Cart Message
               <div className="flex flex-col items-center justify-center h-full text-gray-500">
                 <BsHandbag className="w-12 h-12 mb-4" />
                 <p className="text-lg font-medium text-rose-500">Your cart is empty</p>
                 <p className="text-sm">Add items to get started</p>
               </div>
             ) : (
-              // Cart Items
               <div className="space-y-4">
                 {cartItems.map((item) => (
                   <div key={item.id} className="flex space-x-4 border-b border-gray-100 pb-4">
@@ -127,7 +139,7 @@ const CartSidebar = () => {
                         <h3 className="font-medium">{item.name}</h3>
                         <button 
                           onClick={() => removeItem(item.id)}
-                          className=" text-gray-400 hover:text-red-500 rounded-full p-[1px] ml-5"
+                          className="text-gray-400 hover:text-red-500 rounded-full p-[1px] ml-5"
                           title="Remove from cart"
                         >
                           <IoCloseOutline className="w-5 h-5 transition-all duration-500 hover:rotate-180" />
@@ -180,18 +192,18 @@ const CartSidebar = () => {
               </span>
             </div>
             <div className="flex gap-3">
-              <Link 
+              <CartLink 
                 href="/cart" 
                 className="flex-1 text-center bg-white text-black border-2 border-black py-3 rounded font-semibold hover:bg-gray-50 transition duration-200"
               >
                 View Cart
-              </Link>
-              <Link 
+              </CartLink>
+              <CartLink 
                 href="/checkout" 
                 className="flex-1 text-center bg-black text-white py-3 rounded font-semibold hover:bg-gray-900 transition duration-200"
               >
                 Checkout
-              </Link>
+              </CartLink>
             </div>
           </div>
         </div>

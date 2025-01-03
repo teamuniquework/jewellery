@@ -4,7 +4,6 @@ import Link from "next/link";
 import { RiMenu3Line } from "react-icons/ri";
 import { IoCloseOutline } from "react-icons/io5";
 import { FiUser, FiHeart, FiSearch } from "react-icons/fi";
-import { BsHandbag } from "react-icons/bs";
 import CartSidebar from "./CartSidebar";
 
 const Navigation = () => {
@@ -14,13 +13,28 @@ const Navigation = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // Custom link wrapper component
+  const NavLink = ({ href, className, children }) => (
+    <Link 
+      href={href} 
+      className={className}
+      onClick={closeMobileMenu}
+    >
+      {children}
+    </Link>
+  );
+
   return (
     <>
       <nav className="relative px-4 py-4 flex justify-between items-center bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-6xl mx-auto w-full flex justify-between items-center">
-          <Link href="/wishlist" className="text-3xl font-bold leading-none">
+          <NavLink href="/wishlist" className="text-3xl font-bold leading-none">
             <h1>Jewellery</h1>
-          </Link>
+          </NavLink>
 
           {/* Common icons visible across all screen sizes */}
           <div className="flex items-center">
@@ -29,22 +43,21 @@ const Navigation = () => {
             </button>
 
             {/* Wishlist and Profile icons only visible on tablet and desktop */}
-            <Link
+            <NavLink
               href="/wishlist"
               className="hidden md:block p-2 hover:bg-gray-100 rounded-full transition duration-200"
             >
               <FiHeart className="w-5 h-5 text-gray-600" />
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href="/profile"
               className="hidden md:block p-2 hover:bg-gray-100 rounded-full transition duration-200"
             >
               <FiUser className="w-5 h-5 text-gray-600" />
-            </Link>
+            </NavLink>
 
             <CartSidebar />
 
-            {/* Menu icon visible on mobile and tablet, hidden on desktop */}
             <button
               onClick={toggleMobileMenu}
               className="navbar-burger flex lg:hidden items-center text-black ml-5 p-2 bg-gray-100 rounded-full transition duration-200"
@@ -56,36 +69,36 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
             <li>
-              <Link
+              <NavLink
                 href="/"
                 className="text-base text-gray-600 font-medium hover:text-black"
               >
                 HOME
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 href="/shop"
                 className="text-base text-gray-600 font-medium hover:text-black"
               >
                 SHOP
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 href="/about"
                 className="text-base text-gray-600 font-medium hover:text-black"
               >
                 ABOUT US
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 href="/contact"
                 className="text-base text-gray-600 font-medium hover:text-black"
               >
                 CONTACT
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -107,9 +120,9 @@ const Navigation = () => {
           }`}
         >
           <div className="flex items-center mb-8">
-            <Link href="/" className="mr-auto text-3xl font-bold leading-none">
+            <NavLink href="/" className="mr-auto text-3xl font-bold leading-none">
               <h1>Jewellery</h1>
-            </Link>
+            </NavLink>
             <button
               className="navbar-close p-1 bg-gray-100 rounded-full"
               onClick={toggleMobileMenu}
@@ -121,71 +134,70 @@ const Navigation = () => {
           <div>
             <ul>
               <li className="mb-1">
-                <Link
+                <NavLink
                   href="/"
                   className="block p-4 text-sm font-semibold text-gray-700 hover:bg-slate-50 hover:text-black rounded"
                 >
                   HOME
-                </Link>
+                </NavLink>
               </li>
               <li className="mb-1">
-                <Link
+                <NavLink
                   href="/shop"
                   className="block p-4 text-sm font-semibold text-gray-700 hover:bg-slate-50 hover:text-black rounded"
                 >
                   SHOP
-                </Link>
+                </NavLink>
               </li>
               <li className="mb-1">
-                <Link
+                <NavLink
                   href="/about"
                   className="block p-4 text-sm font-semibold text-gray-700 hover:bg-slate-50 hover:text-black rounded"
                 >
                   ABOUT US
-                </Link>
+                </NavLink>
               </li>
               <li className="mb-1">
-                <Link
+                <NavLink
                   href="/contact"
                   className="block p-4 text-sm font-semibold text-gray-700 hover:bg-slate-50 hover:text-black rounded"
                 >
                   CONTACT
-                </Link>
+                </NavLink>
               </li>
               <li className="mb-1 block md:hidden">
-                <Link
+                <NavLink
                   href="/wishlist"
                   className="block p-4 text-sm font-semibold text-gray-700 hover:bg-slate-50 hover:text-black rounded"
                 >
                   WISHLIST
-                </Link>
+                </NavLink>
               </li>
               <li className="mb-1 block md:hidden">
-                <Link
+                <NavLink
                   href="/profile"
                   className="block p-4 text-sm font-semibold text-gray-700 hover:bg-slate-50 hover:text-black rounded"
                 >
                   MY ACCOUNT
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </div>
 
           <div className="mt-auto">
-            {/* Sign in/up buttons only visible on mobile view */}
             <div className="pt-6 block md:hidden">
-              <Link
+              <NavLink
                 href="/signin"
                 className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-white text-black border-2 border-black rounded hover:bg-gray-100 transition duration-200"
               >
                 Sign in
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 href="/signup"
                 className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-black hover:bg-gray-900 rounded"
               >
                 Sign Up
-              </Link>
+              </NavLink>
             </div>
             <p className="mt-4 text-xs text-center text-gray-400">
               <span>Copyright © 2024</span>
